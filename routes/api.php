@@ -14,15 +14,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 
-Route::get('productos',[\App\Http\Controllers\ProductoController::class,'index']);
 
-Route::post('productos',[\App\Http\Controllers\ProductoController::class,'store']);
+Route::post('login',[\App\Http\Controllers\UserController::class, 'login']);
 
-Route::put('productos/{id}',[\App\Http\Controllers\ProductoController::class,'update']);
+Route::get('productos',[\App\Http\Controllers\ProductoController::class,'index']) -> middleware(middleware: 'auth:sanctum') ;
 
-Route::delete('productos/{id}',[\App\Http\Controllers\ProductoController::class,'destroy']);
+Route::post('productos',[\App\Http\Controllers\ProductoController::class,'store'])-> middleware(middleware: 'auth:sanctum');
+
+Route::put('productos/{id}',[\App\Http\Controllers\ProductoController::class,'update'])-> middleware(middleware: 'auth:sanctum');
+
+Route::delete('productos/{id}',[\App\Http\Controllers\ProductoController::class,'destroy'])-> middleware(middleware: 'auth:sanctum');
+
+Route::post('logout',[\App\Http\Controllers\UserController::class,'logout'])->middleware(middleware: 'auth:sanctum') ;
